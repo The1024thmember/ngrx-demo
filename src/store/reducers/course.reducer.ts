@@ -16,8 +16,12 @@ export function CourseReducer(
 ) {
   switch (action.type) {
     case CourseActionType.ADD_ITEM:
+      console.log('Reducer: running CourseActionType.ADD_ITEM');
       const addCourseAction = action as AddItemAction;
       return [...state, addCourseAction.payload];
+    case CourseActionType.SUCCESS:
+      console.log('Reducer: running CourseActionType.SUCCESS');
+      return;
     default:
       return state;
   }
