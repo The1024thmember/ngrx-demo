@@ -5,9 +5,10 @@ import { BookItem } from '../models/bookItem.model';
 //create a dummy initial state
 const initialState: Array<BookItem> = [
   {
-    id: '1',
-    department: 'Computer Engineering',
-    name: 'C++ Programming',
+    id: 1,
+    author: 'Mark Twain',
+    name: 'Jumping Frog of Calaveras County',
+    type: 'Classical',
   },
 ];
 export function BookReducer(

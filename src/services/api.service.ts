@@ -14,8 +14,9 @@ export class ApiService {
       map(() => {
         return {
           id: '2',
-          department: 'Test department',
-          name: 'Test name',
+          author: 'William Shakespeare',
+          name: 'Henry VI',
+          type: 'classical',
         };
       })
     );

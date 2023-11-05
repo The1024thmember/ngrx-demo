@@ -1,5 +1,6 @@
 export interface BookItem {
-  id: string;
-  department: string;
+  id: number;
+  author: string;
   name: string;
+  type: string;
 }

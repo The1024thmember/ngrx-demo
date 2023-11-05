@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -11,12 +11,12 @@ import { BookItem } from '../store/models/bookItem.model';
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h4>Angular State Management</h4>
+          <h4>Book wish list - Ngrx demo</h4>
         </div>
         <div class="col-md-6">
           <ul class="list-group">
-            <li class="list-group-item" *ngFor="let Book of BookItems$ | async">
-              {{ Book.name }}: <b>{{ Book.department }}</b>
+            <li class="list-group-item" *ngFor="let Book of bookItems$ | async">
+              <b>{{ Book.author }} - {{ Book.name }}</b> - ( {{ Book.type }} )
             </li>
           </ul>
         </div>
@@ -24,36 +24,49 @@ import { BookItem } from '../store/models/bookItem.model';
           <div class="card p-4 shadow-sm">
             <form #myform="ngForm" (ngSubmit)="addBook(myform)">
               <div class="form-group">
-                <label for="name">Identity</label>
+                <label for="id">id</label>
                 <input
                   type="text"
                   class="form-control"
                   ngModel
                   name="id"
                   id="id"
-                  aria-describedby="identity"
+                  [ngModel]="bookFormId$ | async"
+                  aria-describedby="book id"
                   required
                 />
               </div>
               <div class="form-group">
-                <label for="name">Name</label>
+                <label for="author">Author</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  ngModel
+                  name="author"
+                  id="author"
+                  aria-describedby="Author"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="name">Book Name</label>
                 <input
                   type="text"
                   class="form-control"
                   ngModel
                   name="name"
                   id="name"
-                  aria-describedby="name"
+                  aria-describedby="book name"
                 />
               </div>
               <div class="form-group">
-                <label for="department">Department</label>
+                <label for="type">type</label>
                 <input
                   type="text"
                   class="form-control"
                   ngModel
-                  name="department"
-                  id="department"
+                  name="type"
+                  id="type"
                 />
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
@@ -65,11 +78,21 @@ import { BookItem } from '../store/models/bookItem.model';
   </section>`,
 })
 export class AppComponent implements OnInit {
-  BookItems$: Observable<Array<BookItem>> | undefined;
+  bookItems$: Observable<Array<BookItem>> | undefined;
+  bookFormId$: Observable<number> | undefined;
+
+  @ViewChild('myform') myForm: NgForm | undefined;
+
   constructor(private store: Store<AppState>) {}
   ngOnInit(): void {
-    console.log('here');
-    this.BookItems$ = this.store.select((store) => store.Books);
+    this.bookItems$ = this.store.select((store) => store.books);
+    this.bookFormId$ = this.store.select(
+      (store) => store.books[store.books.length - 1].id + 1
+    );
+
+    this.bookFormId$.subscribe((id) => {
+      console.log('id:', id);
+    });
   }
 
   //create the method for adding a new Book and then reset the form
