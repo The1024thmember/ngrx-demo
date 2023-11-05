@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { CourseReducer } from 'src/store/reducers/course.reducer';
+import { BookReducer } from '../store/reducers/book.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { CourseEffects } from 'src/store/effects/course-effects';
+import { BookEffects } from 'src/store/effects/book-effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,12 +18,15 @@ import { CourseEffects } from 'src/store/effects/course-effects';
     AppRoutingModule,
     FormsModule,
     StoreModule.forRoot({
-      courses: CourseReducer,
+      books: BookReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
-    EffectsModule.forRoot([CourseEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+    }),
+    EffectsModule.forRoot([BookEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,62 +1,72 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AddItemAction } from 'src/store/actions/course.action';
+import { AddItemAction } from 'src/store/actions/book.action';
 import { AppState } from 'src/store/models/app-state.model';
-import { CourseItem } from '../store/models/courseItem.model';
+import { BookItem } from '../store/models/bookItem.model';
 @Component({
   selector: 'app-root',
   template: `<section>
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h4>Angular State Management</h4>
+          <h4>Book wish list - Ngrx demo</h4>
         </div>
         <div class="col-md-6">
           <ul class="list-group">
-            <li
-              class="list-group-item"
-              *ngFor="let course of courseItems$ | async"
-            >
-              {{ course.name }}: <b>{{ course.department }}</b>
+            <li class="list-group-item" *ngFor="let Book of bookItems$ | async">
+              <b>{{ Book.author }} - {{ Book.name }}</b> - ( {{ Book.type }} )
             </li>
           </ul>
         </div>
         <div class="col-md-6">
           <div class="card p-4 shadow-sm">
-            <form #myform="ngForm" (ngSubmit)="addCourse(myform)">
+            <form #myform="ngForm" (ngSubmit)="addBook(myform)">
               <div class="form-group">
-                <label for="name">Identity</label>
+                <label for="id">id</label>
                 <input
                   type="text"
                   class="form-control"
                   ngModel
                   name="id"
                   id="id"
-                  aria-describedby="identity"
+                  [ngModel]="bookFormId$ | async"
+                  aria-describedby="book id"
                   required
                 />
               </div>
               <div class="form-group">
-                <label for="name">Name</label>
+                <label for="author">Author</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  ngModel
+                  name="author"
+                  id="author"
+                  aria-describedby="Author"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="name">Book Name</label>
                 <input
                   type="text"
                   class="form-control"
                   ngModel
                   name="name"
                   id="name"
-                  aria-describedby="name"
+                  aria-describedby="book name"
                 />
               </div>
               <div class="form-group">
-                <label for="department">Department</label>
+                <label for="type">type</label>
                 <input
                   type="text"
                   class="form-control"
                   ngModel
-                  name="department"
-                  id="department"
+                  name="type"
+                  id="type"
                 />
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
@@ -68,16 +78,26 @@ import { CourseItem } from '../store/models/courseItem.model';
   </section>`,
 })
 export class AppComponent implements OnInit {
-  courseItems$: Observable<Array<CourseItem>> | undefined;
+  bookItems$: Observable<Array<BookItem>> | undefined;
+  bookFormId$: Observable<number> | undefined;
+
+  @ViewChild('myform') myForm: NgForm | undefined;
+
   constructor(private store: Store<AppState>) {}
   ngOnInit(): void {
-    console.log('here');
-    this.courseItems$ = this.store.select((store) => store.courses);
+    this.bookItems$ = this.store.select((store) => store.books);
+    this.bookFormId$ = this.store.select(
+      (store) => store.books[store.books.length - 1].id + 1
+    );
+
+    this.bookFormId$.subscribe((id) => {
+      console.log('id:', id);
+    });
   }
 
-  //create the method for adding a new course and then reset the form
+  //create the method for adding a new Book and then reset the form
 
-  addCourse(form: NgForm) {
+  addBook(form: NgForm) {
     this.store.dispatch(new AddItemAction(form.value)); // calls the function, interate with the data store
     // what if I have some other action hooked up with the action? saying an api request
     // we can chain the logic inside the reducer function, and do a await async for pushing the new data to BE

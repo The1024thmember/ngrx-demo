@@ -1,18 +1,18 @@
 import { Action } from '@ngrx/store';
-import { CourseItem } from '../models/courseItem.model';
-export enum CourseActionType {
+import { BookItem } from '../models/bookItem.model';
+export enum BookActionType {
   ADD_ITEM = '[COURSE] Add Course',
   SUCCESS = '[COURSE] Succeed',
 }
 export class AddItemAction implements Action {
-  readonly type = CourseActionType.ADD_ITEM;
+  readonly type = BookActionType.ADD_ITEM;
   //add an optional payload
-  constructor(public payload: CourseItem) {}
+  constructor(public payload: BookItem) {}
 }
 export class SuccessAction implements Action {
-  readonly type = CourseActionType.SUCCESS;
+  readonly type = BookActionType.SUCCESS;
   //add an optional payload
-  constructor(public payload: CourseItem) {
+  constructor(public payload: BookItem) {
     console.log('Action: creating SuccessAction');
   }
 }
