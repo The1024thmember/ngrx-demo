@@ -1,4 +1,4 @@
-export interface CourseItem {
+export interface BookItem {
   id: string;
   department: string;
   name: string;

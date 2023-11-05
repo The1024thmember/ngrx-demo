@@ -1,5 +1,5 @@
-import { CourseItem } from './courseItem.model';
+import { BookItem } from './bookItem.model';
 
 export interface AppState {
-  readonly courses: Array<CourseItem>;
+  readonly Books: Array<BookItem>;
 }
