@@ -14,7 +14,7 @@ export class BookEffects {
       mergeMap((action) => {
         // whatever we want to do in here
         console.log('Effect: executing effect function');
-        return this.api.fakeApiCall().pipe(
+        return this.api.fakeGetCall().pipe(
           map((result) => {
             return new BookActions.SuccessAction(result);
           })
