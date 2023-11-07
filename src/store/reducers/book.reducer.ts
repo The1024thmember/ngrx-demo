@@ -19,6 +19,9 @@ export function BookReducer(
     case BookActionType.ADD_ITEM:
       const addBookAction = action as AddItemAction;
       return [...state, addBookAction.payload];
+    case BookActionType.SUCCESS:
+      console.log('Reducer: running BookActionType.SUCCESS');
+      return;
     default:
       return state;
   }
