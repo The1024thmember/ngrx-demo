@@ -1,6 +1,6 @@
 # CourseList
 
-The purpose of this project is to demonstrate how ngrx store works by providing a small practical example. Follow this blog for better understanding on each files and functions: www.sophiazhang.com/post/datastore-blog/
+The purpose of this project is to demonstrate how ngrx store works by providing a small practical example. Follow this blog for better understanding on each files and functions: www.sophiazhang.com/post/datastore/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
 
