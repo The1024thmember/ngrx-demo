@@ -1,7 +1,7 @@
-// import the interface
 import { Action } from '@ngrx/store';
-import { AddItemAction, BookActionType } from '../actions/book.action';
+import { AddBookAction, BookActionType } from '../actions/book.action';
 import { BookItem } from '../models/bookItem.model';
+
 //create a dummy initial state
 const initialState: Array<BookItem> = [
   {
@@ -11,13 +11,14 @@ const initialState: Array<BookItem> = [
     type: 'Classical',
   },
 ];
+
 export function BookReducer(
   state: Array<BookItem> = initialState,
   action: Action
 ) {
   switch (action.type) {
-    case BookActionType.ADD_ITEM:
-      const addBookAction = action as AddItemAction;
+    case BookActionType.Add_Book:
+      const addBookAction = action as AddBookAction;
       return [...state, addBookAction.payload];
     default:
       return state;
