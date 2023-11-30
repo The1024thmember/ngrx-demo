@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
-import { BookReducer } from '../store/reducers/book.reducer';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BookEffects } from 'src/store/effects/book-effects';
+import { BookReducer } from 'src/store/reducers/book.reducer';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,9 +18,6 @@ import { BookEffects } from 'src/store/effects/book-effects';
     FormsModule,
     StoreModule.forRoot({
       books: BookReducer,
-    }),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
